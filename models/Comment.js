@@ -21,6 +21,13 @@ const Comment = sequelize.define('Comment', {
             model: 'users',
             key: 'user_id'
         }
+    },
+    checkpoint_id: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: 'checkpoints',
+            key: 'checkpoint_id'
+        }
     }
 
 },{

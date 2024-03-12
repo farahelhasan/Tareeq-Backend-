@@ -1,9 +1,8 @@
 import IsEmail from "isemail";
-
-
+import  User  from "../models/User.js";
 
 const singup = async (userData)=>{
-   const { name, username, email, password, profile_picture_url, location } = userData;
+   const {name, username, email, password, profile_picture_url, status, x_position, y_position} = userData;
     try{
      
    // Check if the email is valid
@@ -23,8 +22,9 @@ const singup = async (userData)=>{
     }
 
     //Create new user
-    const newUser = await User.create();
-
+    const newUser = await User.create({
+    name, username, email, password, profile_picture_url, status, x_position, y_position
+    });
 
     return {mesaage: "user created successfully", success: true}
 
@@ -44,9 +44,15 @@ const login = async (userData)=>{
       return { error: 'User email not exists' ,success: false};
     }
    //Check the password
-   
+   if(password != user.password){
+    //console.log(password  , userData.password)
+    return { error: 'User password wrong!' ,success: false};
+   }
+   console.log(password  , user.password)
 
-
+   return { message: 'welcome '+user.name ,success: true};
 
 
 }
+
+export {singup, login};
