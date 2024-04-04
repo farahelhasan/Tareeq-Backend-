@@ -50,12 +50,12 @@ const login = async (req, res)=>{
    //Check the password
    else if(userData.password !== user.password){
     //console.log(password  , userData.password)
-    return res.status(400).send({ error: 'User password wrong!' ,success: false});
+    return res.status(401).send({ error: 'User password wrong!' ,success: false});
 
    }
-   return res.status(200).send({ message: 'welcome '+user.name ,success: true});
+   return res.status(200).send({ message: 'welcome '+user.name , data: userData, success: true});
   } catch(error) {
-    return res.status(400).send({ error: error.mesaage ,success: false});
+    return res.status(404).send({ error: error.mesaage ,success: false});
   }
 
 }

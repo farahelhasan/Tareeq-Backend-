@@ -1,4 +1,4 @@
-import Replay from '../models/Replay';
+import Replay from '../models/Replay.js';
 
 const deleteReplay = async (req, res) => {
     const {replayId} = req.params;
