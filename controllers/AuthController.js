@@ -18,7 +18,7 @@ const signup = async (req, res)=>{
      }
 
     // Check if the password is valid
-    if (userData.password.length < 6) {
+    if (userData.password.length < 8) {
       return res.status(500).send({ error: 'Password must be at least 6 characters long', success: false});
     }
 
@@ -40,7 +40,7 @@ const login = async (req, res)=>{
     console.log(userData)
   // const {email, password} = userData;
    const user = await User.findOne(
-    { attributes: ["email", "password", "name"],
+    { 
       where: { email: userData.email } });
    //Check the email 
    if (!user) {
@@ -53,7 +53,7 @@ const login = async (req, res)=>{
     return res.status(401).send({ error: 'User password wrong!' ,success: false});
 
    }
-   return res.status(200).send({ message: 'welcome '+user.name , data: userData, success: true});
+   return res.status(200).send({ message: 'welcome '+user.name , data: user, success: true});
   } catch(error) {
     return res.status(404).send({ error: error.mesaage ,success: false});
   }
