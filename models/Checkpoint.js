@@ -21,7 +21,11 @@ const Checkpoint = sequelize.define('Checkpoint', {
         type: DataTypes.DOUBLE
 
     },
-    status: {
+    status_in: {
+        type: DataTypes.STRING
+
+    },
+    status_out: {
         type: DataTypes.STRING
 
     },

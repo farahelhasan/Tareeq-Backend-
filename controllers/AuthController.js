@@ -40,7 +40,8 @@ const login = async (req, res)=>{
     console.log(userData)
   // const {email, password} = userData;
    const user = await User.findOne(
-    { attributes: ["email", "password", "name"],
+    { 
+      //attributes: ["email", "password", "name"],
       where: { email: userData.email } });
    //Check the email 
    if (!user) {
