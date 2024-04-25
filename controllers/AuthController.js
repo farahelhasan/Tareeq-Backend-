@@ -41,6 +41,7 @@ const login = async (req, res)=>{
   // const {email, password} = userData;
    const user = await User.findOne(
     { 
+      //attributes: ["email", "password", "name"],
       where: { email: userData.email } });
    //Check the email 
    if (!user) {
@@ -57,7 +58,5 @@ const login = async (req, res)=>{
   } catch(error) {
     return res.status(404).send({ error: error.mesaage ,success: false});
   }
-
 }
-
 export {signup, login};
