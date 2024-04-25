@@ -4,8 +4,8 @@ import { getAllCheckpoint, getCheckpointDetails, addCheckpoint, deleteCheckpoint
 const checkpointRouter = express.Router();
 
 
-// Show the details of checkpoint with comments.
-checkpointRouter.route('/:checkpointId').get(getCheckpointDetails);
+// Show the details of checkpoint.
+checkpointRouter.route('/details/:checkpointId').get(getCheckpointDetails);
 // Add new checkpoint. 
 checkpointRouter.route('/add').post(addCheckpoint);
 // Show a list of all checkpoint.

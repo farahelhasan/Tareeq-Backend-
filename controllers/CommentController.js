@@ -58,7 +58,7 @@ const editComment = async (req, res) => {
         res.status(200).send({mesaage: "comment edited successfully", success: true});
       } else {
         res.send({
-          message: `Cannot delete comment with id=${commentId}.`
+          message: `Cannot edit comment with id=${commentId}.`
         });
       }    }catch(error){
        res.status(400).send({error: error.message, success: false})

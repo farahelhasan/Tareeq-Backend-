@@ -4,9 +4,9 @@ import { getAllReplayForSpecificPath, getAllReplayForSpecificQuestion, addReplay
 const replayRouter = express.Router();
 
 // Get all replais for specific live question.
-replayRouter.route('/:questionId').get(getAllReplayForSpecificQuestion);
+replayRouter.route('/forLiveQuestion/:questionId').get(getAllReplayForSpecificQuestion);
 // Get all replais for specific path.
-replayRouter.route('/:pathId').get(getAllReplayForSpecificPath);
+replayRouter.route('/forPath/:pathId').get(getAllReplayForSpecificPath);
 // Add new replay to specific live question.
 replayRouter.route('/add/toQuestiont/:questionId').post(addReplayToSpecificQuestion);
 // Add new replay to specific path.

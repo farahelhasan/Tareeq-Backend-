@@ -8,15 +8,15 @@ const getAllCheckpoint =async (req, res) => {
      if (!checkpoints.length){
         res.status(400).send({error: "there is no checkpoints added yet ", success: false});
      }
-     res.status(200).send({data: checkpointData, success: true})
+     res.status(200).send({data: checkpoints, success: true})
   
     } catch(error){
-     res.status(400).send({error: error.message, success: false});
+     res.status(404).send({error: error.message, success: false});
   
     }
   }
 
-const getCheckpointDetails = async (req, res)=>{
+  const getCheckpointDetails = async (req, res)=>{
    const {checkpointId} = req.params;
    try{
    const checkpointData = await Checkpoint.findOne({
@@ -54,11 +54,11 @@ const deleteCheckpoint = async (req, res) => {
       if (num == 1) {
          res.status(200).send({mesaage: "checkpoint deleted successfully", success: true});
        } else {
-         res.send({
+         res.status(400).send({
            message: `Cannot delete checkpoint with id=${checkpointId}.`,  success: false
          });
        }   }catch(error){
-      res.status(400).send({error: error.message, success: false})
+      res.status(404).send({error: error.message, success: false})
    } 
 }
 
