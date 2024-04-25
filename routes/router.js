@@ -7,6 +7,7 @@ import commentRouter from "./CommentRouter.js";
 import questionRouter from "./LiveQuestionRouter.js";
 import pathRouter from "./PathRouter.js";
 import replayRouter from "./ReplayRouter.js";
+import userRouter from "./UserRouter.js";
 
 router.use('/auth', authRouter);
 router.use('/checkpoint', checkpointRouter);
@@ -14,5 +15,6 @@ router.use('/comment', commentRouter);
 router.use('/liveQuestion', questionRouter);
 router.use('/path', pathRouter);
 router.use('/replay', replayRouter);
+router.use('/user',userRouter);
 
 export default router;
