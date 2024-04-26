@@ -27,7 +27,7 @@ const editReplay = async (req, res) => {
         res.status(200).send({mesaage: "replay edited successfully", success: true});
       } else {
         res.send({
-          message: `Cannot delete replay with id=${commentId}.`
+          message: `Cannot edit replay with id=${commentId}.`
         });
       }    }catch(error){
        res.status(400).send({error: error.message, success: false})
