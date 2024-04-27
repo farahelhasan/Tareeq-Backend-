@@ -76,6 +76,25 @@ const deletePathQuestion = async (req, res) => {
     } 
 }
 
+const getAllQuestionPath= async(req, res)=> {
+  try {
+     const questions = await Path.findAll();
+     if(questions.length){
+      res.status(200).send({data: questions, success: true});
+
+     } else {
+      res.status(404).send({
+        message: `there is no questions added yet.`, success: true
+      });
+    }
+
+  }catch(error){
+      res.status(500).send({error: error.message, success: false})
+
+  }
+}
 
 
-export {addPathQuestion, getSameQuestionPath, getAllQuestionPathForSpecificUser, deletePathQuestion}
+
+
+export {addPathQuestion, getSameQuestionPath, getAllQuestionPathForSpecificUser, deletePathQuestion, getAllQuestionPath}

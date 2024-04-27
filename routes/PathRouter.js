@@ -1,5 +1,5 @@
 import express from 'express';
-import  {addPathQuestion, getSameQuestionPath, getAllQuestionPathForSpecificUser, deletePathQuestion} from '../controllers/PathController.js';
+import  {addPathQuestion, getSameQuestionPath, getAllQuestionPathForSpecificUser, deletePathQuestion, getAllQuestionPath} from '../controllers/PathController.js';
 
 const pathRouter = express.Router();
 
@@ -11,6 +11,9 @@ pathRouter.route('/list/:userId').get(getAllQuestionPathForSpecificUser);
 pathRouter.route('/same/:start/:end').put(getSameQuestionPath);
 // Delete path question.
 pathRouter.route('/delete/:pathId').delete(deletePathQuestion);
+// Get all path question.
+pathRouter.route('/all').get(getAllQuestionPath);
+
 
 
 export default pathRouter;
