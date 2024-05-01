@@ -8,12 +8,10 @@ const Request = sequelize.define('Request', {
         autoIncrement: true,
         primaryKey: true
     },
-    type: {
+    name: {
         type: DataTypes.STRING,
         allowNull: false
-    },
-    date: {
-        type: DataTypes.DATE
+
     },
     x_position: {
         type: DataTypes.DOUBLE
@@ -22,7 +20,19 @@ const Request = sequelize.define('Request', {
 	y_position: {
         type: DataTypes.DOUBLE
 
-    }
+    },
+    status_in: {
+        type: DataTypes.STRING
+
+    },
+    status_out: {
+        type: DataTypes.STRING
+
+    },
+     type: { //add or delete
+        type: DataTypes.STRING,
+        allowNull: false
+    },
 
 },{
     tableName: 'requests'
