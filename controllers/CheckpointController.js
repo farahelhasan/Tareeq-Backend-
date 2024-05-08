@@ -62,7 +62,25 @@ const deleteCheckpoint = async (req, res) => {
    } 
 }
 
+const searchByCheckpointName = async (req, res)=>{
+   const {checkpointName} = req.params;
+   try{
+   const checkpointData = await Checkpoint.findOne({
+    where: {
+        name: checkpointName 
+    }
+});
+   if (!checkpointData){
+      res.status(400).send({error: `ther is no checkpoint with name = ${checkpointName}`, success: false});
+   }
+   res.status(200).send({x_position: checkpointData.x_position, y_position: checkpointData.y_position, success: true})
+
+  } catch(error){
+   res.status(400).send({error: error.message, success: false});
+
+  }
+}
 
 
 
-export {getCheckpointDetails, addCheckpoint, deleteCheckpoint, getAllCheckpoint}
+export {getCheckpointDetails, addCheckpoint, deleteCheckpoint, getAllCheckpoint, searchByCheckpointName}

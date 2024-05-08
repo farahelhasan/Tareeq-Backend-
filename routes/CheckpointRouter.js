@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllCheckpoint, getCheckpointDetails, addCheckpoint, deleteCheckpoint } from '../controllers/CheckpointController.js';
+import { getAllCheckpoint, getCheckpointDetails, addCheckpoint, deleteCheckpoint, searchByCheckpointName } from '../controllers/CheckpointController.js';
 
 const checkpointRouter = express.Router();
 
@@ -12,6 +12,8 @@ checkpointRouter.route('/add').post(addCheckpoint);
 checkpointRouter.route('/list').get(getAllCheckpoint);
 // Delete checkpoint.
 checkpointRouter.route('/delete/:checkpointId').delete(deleteCheckpoint);
+// Search by checkpoint name.
+checkpointRouter.route('/search/:checkpointName').get(searchByCheckpointName);
 
 
 
