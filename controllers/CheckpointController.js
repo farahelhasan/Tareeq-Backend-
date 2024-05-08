@@ -63,4 +63,6 @@ const deleteCheckpoint = async (req, res) => {
 }
 
 
+
+
 export {getCheckpointDetails, addCheckpoint, deleteCheckpoint, getAllCheckpoint}

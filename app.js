@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import './models/index.js'
 import router from './routes/router.js'; 
 dotenv.config();
+
 const app = express();
 const PORT = 3000;
 app.use(express.json())
