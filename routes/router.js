@@ -9,7 +9,7 @@ import pathRouter from "./PathRouter.js";
 import replayRouter from "./ReplayRouter.js";
 import userRouter from "./UserRouter.js";
 import requestRouter from "./RequestRouter.js";
-import testRouter from './test.js';
+import waitingTimeRouter from "./WaitingTimeRouter.js";
 
 
 router.use('/auth', authRouter);
@@ -20,6 +20,7 @@ router.use('/path', pathRouter);
 router.use('/replay', replayRouter);
 router.use('/user',userRouter);
 router.use('/request', requestRouter)
-router.use('/', testRouter )
+router.use('/waitingTime', waitingTimeRouter);
+
 
 export default router;
