@@ -39,7 +39,7 @@ Replay.belongsTo(Path, { foreignKey: 'path_id' });
 LiveQuestion.hasMany(Replay, { as: 'live_replays', foreignKey: 'question_id' });
 Replay.belongsTo(LiveQuestion, { foreignKey: 'question_id' });
 
-Checkpoint.belongsToMany(User, {through: WaitingTime});
-User.belongsToMany(Checkpoint, {through: WaitingTime});
+// Checkpoint.belongsToMany(User, {through: WaitingTime});
+// User.belongsToMany(Checkpoint, {through: WaitingTime});
 
 export  {Checkpoint, User, Request, Comment, LiveQuestion, Path, Replay, WaitingTime};

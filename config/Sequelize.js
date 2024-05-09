@@ -9,7 +9,8 @@ const sequelize = new Sequelize(
     {
         host: process.env.MYSQL_HOST,
         dialect: "mysql",
-    }
+    },
+    
 );
 
 sequelize.authenticate().then(()=>{

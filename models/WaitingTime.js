@@ -10,7 +10,15 @@ const WaitingTime = sequelize.define('WaitingTime', {
   duration_time: {  // in secound.
     type: DataTypes.DOUBLE,
   },
- 
+  CheckpointCheckpointId: {
+    type: DataTypes.INTEGER,
+
+  },
+  UserUserId: {
+    type: DataTypes.INTEGER,
+
+  }
+
 }, 
 {
   tableName: 'waiting_time',
