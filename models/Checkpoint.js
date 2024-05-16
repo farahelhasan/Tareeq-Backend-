@@ -29,7 +29,11 @@ const Checkpoint = sequelize.define('Checkpoint', {
         type: DataTypes.STRING
 
     },
-    average_time: {
+    average_time_in: {
+        type: DataTypes.DOUBLE
+
+    },
+    average_time_out: {
         type: DataTypes.DOUBLE
 
     }
