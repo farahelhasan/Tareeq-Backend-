@@ -1,5 +1,6 @@
 import sequelize from "../config/Sequelize.js";
 import { DataTypes } from "sequelize";
+import Checkpoint from "./Checkpoint.js";
 
 const WaitingTime = sequelize.define('WaitingTime', {
   id: {
@@ -10,14 +11,18 @@ const WaitingTime = sequelize.define('WaitingTime', {
   duration_time: {  // in secound.
     type: DataTypes.DOUBLE,
   },
-  CheckpointCheckpointId: {
+  checkpoint_id: {
     type: DataTypes.INTEGER,
 
   },
-  UserUserId: {
+  user_id: {
     type: DataTypes.INTEGER,
 
-  }
+  },
+  direction: {
+    type: DataTypes.STRING
+
+},
 
 }, 
 {
