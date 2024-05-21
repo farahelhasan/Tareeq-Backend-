@@ -4,9 +4,7 @@ import sequelize from '../config/Sequelize.js';
 const LookupTable = sequelize.define('LookupTable', {
     checkpoint_id: {
         type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-
+        
     },
     x_sign: {
         type: DataTypes.STRING

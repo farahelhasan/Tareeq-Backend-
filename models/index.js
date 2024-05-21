@@ -7,6 +7,7 @@ import LiveQuestion from "./LiveQuestion.js";
 import Path from "./Path.js";
 import Replay from "./Replay.js";
 import WaitingTime from "./WaitingTime.js";
+import Favorite from "./Favorite.js";
 
 User.hasMany(Comment, { as: 'comments', foreignKey: 'user_id' });
 Comment.belongsTo(User, { foreignKey: 'user_id' });
@@ -39,7 +40,7 @@ Replay.belongsTo(Path, { foreignKey: 'path_id' });
 LiveQuestion.hasMany(Replay, { as: 'live_replays', foreignKey: 'question_id' });
 Replay.belongsTo(LiveQuestion, { foreignKey: 'question_id' });
 
-// Checkpoint.belongsToMany(User, {through: WaitingTime});
-// User.belongsToMany(Checkpoint, {through: WaitingTime});
+Checkpoint.belongsToMany(User, {through: Favorite});
+User.belongsToMany(Checkpoint, {through: Favorite});
 
-export  {Checkpoint, User, Request, Comment, LiveQuestion, Path, Replay, WaitingTime};
+export  {Checkpoint, User, Request, Comment, LiveQuestion, Path, Replay, WaitingTime, Favorite};

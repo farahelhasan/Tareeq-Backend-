@@ -1,5 +1,5 @@
 import Checkpoint from "../models/Checkpoint.js";
-import Comment from "../models/Comment.js";
+import Favorite from "../models/Favorite.js";
 
 const getAllCheckpoint =async (req, res) => {
 
@@ -81,6 +81,34 @@ const searchByCheckpointName = async (req, res)=>{
   }
 }
 
+const setFavorite = async (req, res) => {
+   const data = req.body;
+   try{
+      const favoriteCheckpoint = await Favorite.create(data);
+      res.status(201).send({mesaage: "checkpoint favorite added successfully", data: favoriteCheckpoint, success: true});
 
+   }catch(error){
+      res.status(500).send({error: error.message, success: false})
+   }
+}
 
-export {getCheckpointDetails, addCheckpoint, deleteCheckpoint, getAllCheckpoint, searchByCheckpointName}
+const getFavorite = async (req, res) => {
+   const {userId} = req.params;
+   try{
+      const favoriteList = await Favorite.findAll({
+         where:{
+            UserUserId: userId,
+         }
+      });
+      if (!favoriteList.length){
+         return res.status(400).send({error: `ther is no favorite checkpoint for user with id = ${userId}`, success: false});
+      }
+     return res.status(200).send({data: favoriteList, success: true})
+
+   }catch(error){
+      return res.status(400).send({error: error.message, success: false});
+   }
+
+}
+
+export {getCheckpointDetails, addCheckpoint, deleteCheckpoint, getAllCheckpoint, searchByCheckpointName, setFavorite, getFavorite}

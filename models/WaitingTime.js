@@ -1,6 +1,6 @@
 import sequelize from "../config/Sequelize.js";
 import { DataTypes } from "sequelize";
-import Checkpoint from "./Checkpoint.js";
+
 
 const WaitingTime = sequelize.define('WaitingTime', {
   id: {

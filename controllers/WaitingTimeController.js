@@ -13,8 +13,10 @@ const setWaitingTime = async (req, res) => {
     console.log(x_sign, y_sign, checkpoint_id);
 
   // return the direction from lookup table.
-    const direction = findDirection(x_sign, y_sign, checkpoint_id);
-    var waitingTimeData;
+    const direction = await findDirection(x_sign, y_sign, checkpoint_id);
+    console.log(direction);
+
+    const waitingTimeData = {};
     waitingTimeData.checkpoint_id = data.checkpoint_id;
     waitingTimeData.user_id = data.user_id;
     waitingTimeData.direction = direction;
