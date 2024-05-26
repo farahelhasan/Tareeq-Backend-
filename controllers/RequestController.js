@@ -4,7 +4,7 @@ import Checkpoint from '../models/Checkpoint.js';
 var x;
 var y;
 
-const checkRequest = async (checkpoint) => {
+const checkAddRequest = async (checkpoint) => {
     const { x_position, y_position } = checkpoint; 
 
     try {
@@ -37,13 +37,32 @@ const checkRequest = async (checkpoint) => {
     }
 }
 
+const checkDeleteRequest = async (checkpoint) => {
+  try{
+    const sameRequest = await Request.findOne({
+       where:
+        {name: checkpoint.name}
+    })
+    if(sameRequest != null){
+      deleteRequest(sameRequest.request_id);
+      return true;
+   }
+   else{
+      return false;
+   }
+  } catch (error) {
+    console.error(error);
+    return error;
+   // res.status(500).json({ message: 'Server error' });
+  }
+}
 const addCheckpointRequest= async (req, res) => {
     const checkpointData = req.body;
 
     // check if the same request already exiest.
-    var requestExist = await checkRequest(checkpointData);
+    var requestExist = await checkAddRequest(checkpointData);
     if(requestExist){
-      addCheckpointFromRequest(checkpointData);
+      addCheckpointtoCheckpointTable(checkpointData);
       res.status(201).send({mesaage: "Request added successfully", success: true});
 
     }else{
@@ -61,8 +80,12 @@ const addCheckpointRequest= async (req, res) => {
  const deleteCheckpointRequest= async (req, res) => {
     const checkpointData = req.body;
 
-    if(checkRequest(checkpointData)){
-      addCheckpointFromRequest(checkpointData);
+    // check if the same request already exiest.
+    var requestExist = await checkDeleteRequest(checkpointData);
+    if(requestExist){
+      deleteCheckpointFromCheckpointTable(checkpointData);
+      res.status(201).send({mesaage: "Request added successfully", success: true});
+
     }else {
         checkpointData.type = "delete";
         try{
@@ -76,7 +99,7 @@ const addCheckpointRequest= async (req, res) => {
   }
 
 
- const addCheckpointFromRequest = async (checkpointData) => {
+ const addCheckpointtoCheckpointTable = async (checkpointData) => {
   checkpointData.x_position = (checkpointData.x_position + x) /2;
   checkpointData.y_position = (checkpointData.y_position + y) /2;
   try{
@@ -84,6 +107,22 @@ const addCheckpointRequest= async (req, res) => {
   }catch(error){
     return error;
   } 
+}
+
+const deleteCheckpointFromCheckpointTable = async (checkpoint) => {
+  try{
+    const num = await Checkpoint.destroy({
+       where: {
+        name: checkpoint.name
+      }
+    })
+   
+  }catch(error){
+    return error;
+   // res.status(404).send({error: error.message, success: false})
+ } 
+
+
 }
 
 const deleteRequest = async (id) => {

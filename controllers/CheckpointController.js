@@ -37,6 +37,7 @@ const getAllCheckpoint =async (req, res) => {
 
 const addCheckpoint = async (req, res) => {
    const checkpointData = req.body;
+   console.log(checkpointData)
    try{
       const checkpoint = await Checkpoint.create(checkpointData);
       res.status(201).send({mesaage: "checkpoint added successfully", data: checkpoint, success: true});
@@ -73,7 +74,7 @@ const searchByCheckpointName = async (req, res)=>{
    if (!checkpointData){
       res.status(400).send({error: `ther is no checkpoint with name = ${checkpointName}`, success: false});
    }
-   res.status(200).send({x_position: checkpointData.x_position, y_position: checkpointData.y_position, success: true})
+   res.status(200).send({data: checkpointData, success: true})
 
   } catch(error){
    res.status(400).send({error: error.message, success: false});
@@ -96,14 +97,22 @@ const getFavorite = async (req, res) => {
    const {userId} = req.params;
    try{
       const favoriteList = await Favorite.findAll({
+         attribute: ['CheckpointCheckpointId'],
          where:{
-            UserUserId: userId,
+            UserUserId: userId, 
          }
       });
-      if (!favoriteList.length){
+      const checkpointsData = await Promise.all(favoriteList.map(async (favorite)=> {
+         const checkpointId = favorite.CheckpointCheckpointId;
+
+         const checkpointData = await Checkpoint.findByPk(checkpointId);
+         return checkpointData;
+      }))
+
+      if (!checkpointsData.length){
          return res.status(400).send({error: `ther is no favorite checkpoint for user with id = ${userId}`, success: false});
       }
-     return res.status(200).send({data: favoriteList, success: true})
+     return res.status(200).send({data: checkpointsData, success: true})
 
    }catch(error){
       return res.status(400).send({error: error.message, success: false});
@@ -111,4 +120,45 @@ const getFavorite = async (req, res) => {
 
 }
 
-export {getCheckpointDetails, addCheckpoint, deleteCheckpoint, getAllCheckpoint, searchByCheckpointName, setFavorite, getFavorite}
+const deleteFavorite = async (req, res)=>{
+   const {checkpointId} = req.params;
+   const {userId} = req.params;
+   try{
+      const num = await Favorite.destroy({
+         where: {
+            CheckpointCheckpointId: checkpointId,
+            UserUserId: userId
+         }
+      })
+      if (num == 1) {
+         res.status(200).send({mesaage: "remove checkpoint from favorite", success: true});
+       } else {
+         res.status(400).send({
+           message: `Cannot delete checkpoint with id=${checkpointId}.`,  success: false
+         });
+       }   }catch(error){
+      res.status(404).send({error: error.message, success: false})
+   } 
+
+}
+
+const editCheckpoint = async (req, res) => {
+   const {checkpointId} = req.params;
+   const checkpointData = req.body;
+   try{
+      const num = await Checkpoint.update(checkpointData, {
+         where: {checkpoint_id: checkpointId}
+      })
+      if (num == 1) {
+       res.status(200).send({mesaage: "checkpoint information edited successfully", success: true});
+     } else {
+       res.send({
+         message: `Cannot edit checkpoint info with id=${checkpointId}.`
+       });
+     }    }catch(error){
+      res.status(400).send({error: error.message, success: false})
+   } 
+}
+
+
+export {getCheckpointDetails, addCheckpoint, deleteCheckpoint, getAllCheckpoint, searchByCheckpointName, setFavorite, getFavorite, deleteFavorite, editCheckpoint}

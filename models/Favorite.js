@@ -7,6 +7,7 @@ const Favorite = sequelize.define('Favorite', {
     autoIncrement: true,
     primaryKey: true,
   },
+
 //   checkpoint_id: {
 //     type: DataTypes.INTEGER,
 

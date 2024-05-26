@@ -10,6 +10,7 @@ import replayRouter from "./ReplayRouter.js";
 import userRouter from "./UserRouter.js";
 import requestRouter from "./RequestRouter.js";
 import waitingTimeRouter from "./WaitingTimeRouter.js";
+import lookupRouter from "./LookUpTableRouter.js";
 
 
 router.use('/auth', authRouter);
@@ -21,6 +22,7 @@ router.use('/replay', replayRouter);
 router.use('/user',userRouter);
 router.use('/request', requestRouter)
 router.use('/waitingTime', waitingTimeRouter);
+router.use('/lookupTable', lookupRouter);
 
 
 export default router;
