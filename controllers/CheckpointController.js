@@ -72,12 +72,12 @@ const searchByCheckpointName = async (req, res)=>{
     }
 });
    if (!checkpointData){
-      res.status(400).send({error: `ther is no checkpoint with name = ${checkpointName}`, success: false});
+    return  res.status(400).send({error: `ther is no checkpoint with name = ${checkpointName}`, success: false});
    }
-   res.status(200).send({data: checkpointData, success: true})
+   return res.status(200).send({data: checkpointData, success: true})
 
   } catch(error){
-   res.status(400).send({error: error.message, success: false});
+   return res.status(400).send({error: error.message, success: false});
 
   }
 }
@@ -86,10 +86,10 @@ const setFavorite = async (req, res) => {
    const data = req.body;
    try{
       const favoriteCheckpoint = await Favorite.create(data);
-      res.status(201).send({mesaage: "checkpoint favorite added successfully", data: favoriteCheckpoint, success: true});
+      return res.status(201).send({mesaage: "checkpoint favorite added successfully", data: favoriteCheckpoint, success: true});
 
    }catch(error){
-      res.status(500).send({error: error.message, success: false})
+      return res.status(500).send({error: error.message, success: false})
    }
 }
 
@@ -131,13 +131,13 @@ const deleteFavorite = async (req, res)=>{
          }
       })
       if (num == 1) {
-         res.status(200).send({mesaage: "remove checkpoint from favorite", success: true});
+        return res.status(200).send({mesaage: "remove checkpoint from favorite", success: true});
        } else {
-         res.status(400).send({
+        return res.status(400).send({
            message: `Cannot delete checkpoint with id=${checkpointId}.`,  success: false
          });
        }   }catch(error){
-      res.status(404).send({error: error.message, success: false})
+     return res.status(404).send({error: error.message, success: false})
    } 
 
 }
@@ -160,5 +160,25 @@ const editCheckpoint = async (req, res) => {
    } 
 }
 
+const checkFavorite = async (req, res)=>{
+   const {userId, checkpointId} = req.params;
+   try{
+   const checkpointData = await Favorite.findOne({
+    where: {
+        UserUserId: userId,
+        CheckpointCheckpointId: checkpointId
+    }
+});
+   if (!checkpointData){
+     return res.status(400).send({message: `not favorite`, success: false});
+   }
+   return res.status(200).send({data: checkpointData, success: true})
 
-export {getCheckpointDetails, addCheckpoint, deleteCheckpoint, getAllCheckpoint, searchByCheckpointName, setFavorite, getFavorite, deleteFavorite, editCheckpoint}
+  } catch(error){
+   return res.status(400).send({error: error.message, success: false});
+
+  }
+}
+
+
+export {getCheckpointDetails, addCheckpoint, deleteCheckpoint, getAllCheckpoint, searchByCheckpointName, setFavorite, getFavorite, deleteFavorite, editCheckpoint, checkFavorite}

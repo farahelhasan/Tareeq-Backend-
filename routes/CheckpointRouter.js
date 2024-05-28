@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllCheckpoint, getCheckpointDetails, addCheckpoint, deleteCheckpoint, searchByCheckpointName, setFavorite, getFavorite, deleteFavorite, editCheckpoint } from '../controllers/CheckpointController.js';
+import { getAllCheckpoint, getCheckpointDetails, addCheckpoint, deleteCheckpoint, searchByCheckpointName, setFavorite, getFavorite, deleteFavorite, editCheckpoint, checkFavorite } from '../controllers/CheckpointController.js';
 
 const checkpointRouter = express.Router();
 
@@ -22,6 +22,8 @@ checkpointRouter.route('/favorite/:userId').get(getFavorite);
 checkpointRouter.route('/favorite/remove/:checkpointId/:userId').delete(deleteFavorite);
 // Edit checkpoiny information.
 checkpointRouter.route('/edit/:checkpointId').put(editCheckpoint);
+// Check if specific checkpoint mark as favorite.
+checkpointRouter.route('/checkFavorite/:userId/:checkpointId').get(checkFavorite);
 
 
 
