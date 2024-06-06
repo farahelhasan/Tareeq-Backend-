@@ -38,41 +38,43 @@ const getAllQuestionsForSpecificCheckpoint = async(req, res)=> {
 
 
 const deleteLiveQuestion = async (req, res) => {
-    const {questionId} = req.params.questionId;
-    try{
-       const num = await LiveQuestion.destroy({
-          where: {question_id: questionId}
-       })
-       if (num == 1) {
-        res.status(200).send({mesaage: "question deleted successfully", success: true});
-      } else {
-        res.send({
-          message: `Cannot delete Question with id=${questionId}.`, success: false
+  const { questionId } = req.params; 
+  try {
+     const num = await LiveQuestion.destroy({
+        where: { question_id: questionId }
+     });
+     if (num == 1) {
+        res.status(200).send({ message: "Question deleted successfully", success: true });
+     } else {
+        res.status(400).send({
+           message: `Cannot delete Question with id=${questionId}.`, success: false
         });
-      }
-
-    }catch(error){
-       res.status(400).send({error: error.message, success: false})
-    } 
+     }
+  } catch(error) {
+     res.status(500).send({ error: error.message, success: false });
+  } 
 }
+
 
 const editLiveQuestion = async (req, res) => {
-    const {questionId} = req.params.questionId;
-    const questionData = req.body;
-    try{
-       const num = await LiveQuestion.update(commentData, {
-          where: {comment_id: commentId}
-       })
+   const { questionId } = req.params; // Access questionId directly from req.params
+   const questionData = req.body;
+   try {
+       const num = await LiveQuestion.update(questionData, {
+           where: { question_id: questionId } // Use questionId instead of commentId
+       });
        if (num == 1) {
-        res.status(200).send({mesaage: "question edited successfully", success: true});
-      } else {
-        res.send({
-          message: `Cannot edit Question with id=${questionId}.`, success: false
-        });
-      }    }catch(error){
-       res.status(400).send({error: error.message, success: false})
-    } 
+           res.status(200).send({ message: "Question edited successfully", success: true });
+       } else {
+           res.status(404).send({
+               message: `Cannot edit Question with id=${questionId}.`, success: false
+           });
+       }
+   } catch (error) {
+       res.status(400).send({ error: error.message, success: false });
+   }
 }
+
 
 
 export {addLiveQuestion, getAllQuestionsForSpecificCheckpoint, editLiveQuestion, deleteLiveQuestion}
