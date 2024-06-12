@@ -3,6 +3,7 @@ import  User  from "../models/User.js";
 
 const signup = async (req, res)=>{
    const userData = req.body;
+   console.log(userData);
    //const {name, username, email, password, profile_picture_url, status, x_position, y_position} = userData;
     try{
      
@@ -37,7 +38,7 @@ const signup = async (req, res)=>{
 const login = async (req, res)=>{
    const userData = req.body;
    try{
-    console.log(userData)
+    console.log(userData);
   // const {email, password} = userData;
    const user = await User.findOne(
     { 
@@ -50,12 +51,18 @@ const login = async (req, res)=>{
 
    //Check the password
    else if(userData.password !== user.password){
+    console.log("helll 1")
+
     //console.log(password  , userData.password)
     return res.status(401).send({ error: 'User password wrong!' ,success: false});
 
    }
+   console.log("helll2")
+
    return res.status(200).send({ message: 'welcome '+user.name , data: user, success: true});
   } catch(error) {
+    console.log(error)
+
     return res.status(404).send({ error: error.mesaage ,success: false});
   }
 }

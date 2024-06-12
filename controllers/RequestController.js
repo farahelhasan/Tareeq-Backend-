@@ -102,6 +102,7 @@ const addCheckpointRequest= async (req, res) => {
  const addCheckpointtoCheckpointTable = async (checkpointData) => {
   checkpointData.x_position = (checkpointData.x_position + x) /2;
   checkpointData.y_position = (checkpointData.y_position + y) /2;
+  checkpointData.comlete_flag = false;
   try{
      const checkpoint = await Checkpoint.create(checkpointData);
   }catch(error){

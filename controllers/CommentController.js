@@ -22,12 +22,16 @@ const addComment = async (req, res)=>{
     const commentData = req.body;
     const {checkpointId} = req.params;
     commentData.checkpoint_id = checkpointId;
+    console.log(commentData);
+
     try{
     const newComment = await Comment.create(commentData);
-    res.status(201).send({mesaage: "comment added successfully", data: newComment, status: true })
+
+    return res.status(201).send({mesaage: "comment added successfully", data: newComment, status: true })
 
     }catch(error){
-        res.status(500).send({error: error.message, success: false})
+
+      return  res.status(500).send({error: error.message, success: false})
 
     }
 }
