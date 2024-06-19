@@ -1,5 +1,5 @@
 import express from 'express';
-import { addLiveQuestion, getAllQuestionsForSpecificCheckpoint, deleteLiveQuestion, editLiveQuestion} from '../controllers/LiveQuestionController.js';
+import { addLiveQuestion, getAllQuestionsForSpecificCheckpoint, deleteLiveQuestion, editLiveQuestion, getUser} from '../controllers/LiveQuestionController.js';
 
 const questionRouter = express.Router();
 
@@ -11,6 +11,8 @@ questionRouter.route('/list/forCheckpoint/:checkpointId').get(getAllQuestionsFor
 questionRouter.route('/edit/:questionId').put(editLiveQuestion);
 // Delete live question.
 questionRouter.route('/delete/:questionId').delete(deleteLiveQuestion);
+// Get user, who made the question.
+questionRouter.route('/getUser/:questionId').get(getUser);
 
 
 export default questionRouter;

@@ -37,7 +37,10 @@ const User = sequelize.define('User', {
 	y_position: {
         type: DataTypes.DOUBLE
 
-    }
+    },
+    fcmToken: {
+        type: DataTypes.STRING
+    },
 
 },{
     tableName: 'users'

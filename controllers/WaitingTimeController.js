@@ -88,8 +88,6 @@ const calculateAvarageWaitingTime = async (checkpoint_id, direction) =>{
 };
 
 const setAvarageTime = async (checkpoint_id, average, direction) => {
-   
-  
   try{
    const checkpoint = await Checkpoint.findOne({
     where: {

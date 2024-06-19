@@ -2,13 +2,17 @@ import LiveQuestion  from "../models/LiveQuestion.js";
 
 const addLiveQuestion = async(req, res)=> {
     const questionDescription = req.body;
+    console.log(questionDescription);
     const {checkpointId} = req.params;
     questionDescription.checkpoint_id = checkpointId;   
      try{
         const newQuestion = await LiveQuestion.create(questionDescription);
-        res.status(201).send({mesaage: "question added successfully", data: newQuestion, success: true});
+        console.log("doneeeeeee");
+
+       return  res.status(201).send({mesaage: "question added successfully", data: newQuestion, success: true});
     }catch(error){
-        res.status(500).send({error: error.message, success: false})
+      console.log("hrrrrrrrrr");
+       return res.status(500).send({error: error.message, success: false})
     } 
 
 }
@@ -76,5 +80,29 @@ const editLiveQuestion = async (req, res) => {
 }
 
 
+const getUser = async(req, res)=> {
+  const {questionId} = req.params;
+  try {
+     const user = await LiveQuestion.findOne(
+      {
+          where: 
+          {question_id: questionId}
+      }
+     );
+     if(user){
+      console.log(user);
+      res.status(200).send({userId: user.user_id, success: true});
 
-export {addLiveQuestion, getAllQuestionsForSpecificCheckpoint, editLiveQuestion, deleteLiveQuestion}
+     } else {
+      res.status(404).send({
+        message: `error.`, success: true
+      });
+    }
+
+  }catch(error){
+      res.status(500).send({error: error.message, success: false})
+
+  }
+}
+
+export {addLiveQuestion, getAllQuestionsForSpecificCheckpoint, editLiveQuestion, deleteLiveQuestion, getUser}

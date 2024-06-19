@@ -36,6 +36,9 @@ const Checkpoint = sequelize.define('Checkpoint', {
     average_time_out: {
         type: DataTypes.DOUBLE
 
+    },
+    complete_flag: {
+        type: DataTypes.BOOLEAN
     }
    
 }, 

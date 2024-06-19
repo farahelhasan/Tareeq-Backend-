@@ -37,6 +37,7 @@ const getAllCheckpoint =async (req, res) => {
 
 const addCheckpoint = async (req, res) => {
    const checkpointData = req.body;
+   checkpointData.complete_flag = true;
    console.log(checkpointData)
    try{
       const checkpoint = await Checkpoint.create(checkpointData);
@@ -179,6 +180,5 @@ const checkFavorite = async (req, res)=>{
 
   }
 }
-
 
 export {getCheckpointDetails, addCheckpoint, deleteCheckpoint, getAllCheckpoint, searchByCheckpointName, setFavorite, getFavorite, deleteFavorite, editCheckpoint, checkFavorite}
