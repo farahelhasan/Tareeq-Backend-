@@ -3,37 +3,35 @@ import  User  from "../models/User.js";
 
 const signup = async (req, res)=>{
    const userData = req.body;
-   console.log(userData);
    //const {name, username, email, password, profile_picture_url, status, x_position, y_position} = userData;
     try{
      
    // Check if the email is valid
     if (!IsEmail.validate(userData.email)) {
-      return res.status(500).send({ error: 'Invalid email', success: false});
+      return res.status(400).send({ error: 'Invalid email', success: false });
     }
 
-     // Check if the user already exists in the database
-     const user = await User.findOne({ where: { email : userData.email } });
-     if (user) {
-       return res.status(500).send({ error: 'User email already exists' ,success: false});
-     }
+    // Check if the user already exists
+    const user = await User.findOne({ where: { email: userData.email } });
+    if (user) {
+      return res.status(400).send({ error: 'User email already exists', success: false });
+    }
 
-    // Check if the password is valid
+    // Validate password length
     if (userData.password.length < 8) {
-      return res.status(500).send({ error: 'Password must be at least 6 characters long', success: false});
+      return res.status(400).send({ error: 'Password must be at least 8 characters long', success: false });
     }
 
-
-    //Create new user
-    console.log(userData);
+    // Create new user
+    console.log('Creating new user:', userData);
     const newUser = await User.create(userData);
-    return res.status(201).send({mesaage: "user created successfully", success: true, data: newUser});
+    return res.status(201).send({ message: "User created successfully", success: true, data: newUser });
 
-    }catch(error){
-      return res.status(500).send( {error: error.message, success: false});
-    }
-
-}
+  } catch (error) {
+    console.error('Error during signup:', error);
+    return res.status(500).send({ error: error.message, success: false });
+  }
+};
 
 const login = async (req, res)=>{
    const userData = req.body;
