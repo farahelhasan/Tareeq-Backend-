@@ -76,9 +76,9 @@ const calculateAvarageWaitingTime = async (checkpoint_id, direction) =>{
       }
   
       // Calculate the average.
-      const average = sum / recentItems.length;
+      const average = (sum / recentItems.length).toFixed(2);
       console.log(average); 
-
+      
       // set avarage time.
       setAvarageTime(checkpoint_id, average, direction);
     } catch (error) {
@@ -100,9 +100,36 @@ const setAvarageTime = async (checkpoint_id, average, direction) => {
       if(direction == "in"){
         checkpoint.average_time_in = average;
         await checkpoint.save(); // Save the changes to the database.
+        if(average <= 5){
+          checkpoint.status_in = "سالك";
+          await checkpoint.save(); // Save the changes to the database.
+        }else if(average > 5 && average <= 15 ){
+          checkpoint.status_in = "سير بطيء";
+          await checkpoint.save(); // Save the changes to the database.
+        }else if(average > 15 && average <= 30 ){
+          checkpoint.status_in = "أزمة";
+          await checkpoint.save(); // Save the changes to the database.
+        }else if(average > 30 ){
+          checkpoint.status_in = "أزمة خانقة";
+          await checkpoint.save(); // Save the changes to the database.
+        }
+        
       }else if(direction == "out"){
         checkpoint.average_time_out = average;
         await checkpoint.save(); // Save the changes to the database.
+        if(average <= 5){
+          checkpoint.status_out = "سالك";
+          await checkpoint.save(); // Save the changes to the database.
+        }else if(average > 5 && average <= 15 ){
+          checkpoint.status_out = "سير بطيء";
+          await checkpoint.save(); // Save the changes to the database.
+        }else if(average > 15 && average <= 30 ){
+          checkpoint.status_out = "أزمة";
+          await checkpoint.save(); // Save the changes to the database.
+        }else if(average > 30 ){
+          checkpoint.status_out = "أزمة خانقة";
+          await checkpoint.save(); // Save the changes to the database.
+        }
       }
    }
   }catch(error){
