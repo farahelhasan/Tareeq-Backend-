@@ -28,7 +28,11 @@ const Comment = sequelize.define('Comment', {
             model: 'checkpoints',
             key: 'checkpoint_id'
         }
+    },
+    timestamp:{
+        type: DataTypes.STRING,
     }
+
 
 },{
     tableName: 'comments'

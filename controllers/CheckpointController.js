@@ -181,4 +181,29 @@ const checkFavorite = async (req, res)=>{
   }
 }
 
-export {getCheckpointDetails, addCheckpoint, deleteCheckpoint, getAllCheckpoint, searchByCheckpointName, setFavorite, getFavorite, deleteFavorite, editCheckpoint, checkFavorite}
+const getUsersFavoriteCheckpoint = async(req,res) =>{
+   const {checkpointId} = req.params;
+   try {
+      const favorites = await Favorite.findAll({
+        where: {
+         CheckpointCheckpointId: checkpointId
+        },
+        attributes: ['UserUserId'] // Select only the userId column
+      });
+  
+      // Extract userIds from the result
+      if(favorites.length){
+      const userIds = favorites.map(favorite => favorite.UserUserId);
+      console.log(userIds);
+      return res.status(200).send({data: userIds})
+      }else{
+      return res.status(401).send({data: userIds})
+      }
+      //return userIds;
+    } catch (error) {
+      return res.status(400).send({error: error.message, success: false});
+
+    }
+}
+
+export {getCheckpointDetails, addCheckpoint, deleteCheckpoint, getAllCheckpoint, searchByCheckpointName, setFavorite, getFavorite, deleteFavorite, editCheckpoint, checkFavorite, getUsersFavoriteCheckpoint}

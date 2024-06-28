@@ -73,4 +73,47 @@ const saveToken = async (req, res) => {
    }
  }
 
-export {sendNotification, saveToken, getToken};
+ const sendFavoriteNotification = async (req, res) => {
+    const receivedToken = req.body.token;
+    const userNmae = req.body.name;
+    const comment = req.body.replay_description
+    const checkpointName = req.body.checkpoint_name;
+    //"cWmSUDwoSKi1MuMGCn3qpA:APA91bFIkmam5I8cHbN2KGMMlEYnOeeF4VEfPOxV-sEdKL1ABd8jq3kzpGA72r4G0vsYCWiV7p845557_2V_zLYskDcXvI14yZAusZRB-5rMm0S4oTikcdc2E5rItPsc_QchNNpPmz3U"
+    
+    req.body.fcmToken;
+    const notificationBody = userNmae+" : "+ comment;
+    console.log(notificationBody);
+    const mesaage = {
+        notification: {
+            title: " آخر تحديث على "+checkpointName,
+            body: notificationBody
+        },
+        token:receivedToken
+    };
+    // const notificationBody = " علق" +userNmae+ ": "+ comment;
+    // console.log(notificationBody);
+    // const mesaage = {
+    //     notification: {
+    //         title: "طريق",
+    //         body: notificationBody
+    //     },
+    //     token:receivedToken
+    // };
+    getMessaging()
+    .send(mesaage)
+    .then((responce) => {
+        res.status(201).json({
+            message: "Successfuly sent message",
+            token: receivedToken
+        });
+        console.log("Succesfuly sent message", responce);
+    })
+    .catch((error) => {
+        res.status(400);
+        res.send(error);
+        console.log("Error sending message", error);
+    });
+};
+
+
+export {sendNotification, saveToken, getToken, sendFavoriteNotification};
